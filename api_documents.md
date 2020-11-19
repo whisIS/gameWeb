@@ -1,7 +1,7 @@
 ## 前后端接口文档
 ### usr相关接口
 ##### 注册signup接口
-* 映射地址 /usr/signin
+* 映射地址 /usr/signup
 * 请求方式 POST
 * 参数 
 
