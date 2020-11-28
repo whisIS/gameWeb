@@ -8,6 +8,7 @@
     "build": "vue-cli-service build --mode production"
   },
   "dependencies": {
+    "ant-design-vue": "^1.7.2",
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",

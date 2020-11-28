@@ -24,9 +24,13 @@ import "./components";
 
 /* 引入全局filter */
 import * as filters from "./filters";
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
+
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]));
 
 Vue.config.productionTip = false;
+Vue.use(Antd);
 
 new Vue({
   router,
