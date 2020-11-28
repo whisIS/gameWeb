@@ -9,16 +9,16 @@
     <a-form-model-item has-feedback label="确认密码" prop="checkPass">
       <a-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
     </a-form-model-item>
-    <a-form-model-item has-feedback label="邮箱" prop="email">
+    <a-form-model-item label="邮箱" prop="email">
       <a-input v-model="ruleForm.email" />
     </a-form-model-item>
 
     <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" @click="onSubmit">
-        创建
+      <a-button type="primary" @click="submitForm('ruleForm')">
+        注册
       </a-button>
-      <a-button style="margin-left: 10px;">
-        取消
+      <a-button style="margin-left: 30px" @click="resetForm('ruleForm')">
+        重置
       </a-button>
     </a-form-model-item>
 
@@ -26,6 +26,9 @@
 </template>
 <script>
 export default {
+  props:{
+    callback: Function
+  },
   data() {
     let validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -58,19 +61,19 @@ export default {
         email: '',
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: 'change' }],
+        name: [{ required: true, message: '请输入登录名' }],
+        pass: [{ required: true, message: '请输入密码' }, { validator: validatePass, trigger: 'change' }],
         checkPass: [{ validator: validatePass2, trigger: 'change' }],
+        email: [{type: 'email', message: '请输入正确的邮箱地址'}]
       },
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!", this.form);
-    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
+          console.log('submit!');
+          this.callback();
         } else {
           console.log('error submit!!');
           return false;

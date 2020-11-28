@@ -1,24 +1,27 @@
 <template>
-  <a-form-model :model="ruleForm" ref="ruleForm" v-bind="layout">
+  <a-form-model :model="ruleForm" ref="ruleForm" :rules="rules" v-bind="layout">
     <a-form-model-item label="用户名" prop="name">
       <a-input v-model="ruleForm.name" />
     </a-form-model-item>
-    <a-form-model-item has-feedback label="密码" prop="pass">
+    <a-form-model-item label="密码" prop="pass">
       <a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
     </a-form-model-item>
 
     <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" @click="onSubmit">
+      <a-button type="primary" @click="submitForm('ruleForm')">
         登录
       </a-button>
-      <a-button style="margin-left: 10px;">
-        退出
+      <a-button style="margin-left: 30px" @click="resetForm('ruleForm')">
+        重置
       </a-button>
     </a-form-model-item>
   </a-form-model>
 </template>
 <script>
 export default {
+  props: {
+    callback: Function
+  },
   data() {
     return {
       layout: {
@@ -29,16 +32,18 @@ export default {
         name: '',
         pass: '',
       },
+      rules: {
+        name: [{ required: true, message: '请输入登录名' }],
+        pass: [{ required: true, message: '请输入密码' }],
+      },
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!", this.form);
-    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
+          console.log('submit!');
+          this.callback();
         } else {
           console.log('error submit!!');
           return false;

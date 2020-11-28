@@ -54,8 +54,8 @@
       </a-col>
     </a-row>
     <a-modal :title="title" :visible="visible" :confirm-loading="confirmLoading" @cancel="handleCancel" :footer="null">
-      <login v-if="title == '登录'"/>
-      <sign v-if="title == '注册'"/>
+      <login :callback="handleCancel" v-if="title == '登录'"/>
+      <sign :callback="handleCancel" v-if="title == '注册'"/>
     </a-modal>
   </div>
 </template>

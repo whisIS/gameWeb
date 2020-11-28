@@ -1,7 +1,7 @@
 <template>
   <div  class="home">
     <div>
-      <!-- <my-header></my-header> -->
+      <my-header></my-header>
       <div>
         <br />
         <a-row>
@@ -106,7 +106,7 @@ export default {
     };
   },
   created() {
-    this.startApi();
+    // this.startApi();
   },
   methods: {
     startApi() {
