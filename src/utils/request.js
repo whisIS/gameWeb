@@ -24,7 +24,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data;
-    if (res._code != "200") {
+    if (response.status != "200") {
       Message.closeAll();
       Message({
         message: res._msg,
