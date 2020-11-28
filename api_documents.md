@@ -111,6 +111,7 @@
 			{
 				usrname : string,
 				comment : string,
+				grade : int (1-10)  #用户对游戏的评分
 				date : datestamp
 			}
 			....
@@ -127,21 +128,7 @@
 
 		comment : string
 
-* 返回
-
-		returnCode (表示成功、失败等状态。可以由后端定义)
-
-		msg (告知用户的信息等)
-
-##### 游戏评分grade接口
-* /game/grade
-* 请求方式 POST
-* 参数
-
-		gameId : int
-
-		num : int (1-10)
-
+		grade : int (1-10)  #用户对游戏的评分
 
 * 返回
 
