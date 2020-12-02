@@ -38,14 +38,14 @@
                 <a-icon type="user" />{{ usrName }}
               </span>
               <a-menu-item-group title="用户">
-                <a-menu-item key="setting:1">
+                <a-menu-item key="setting:1" @click="jumpUserInfo">
                   我的信息
                 </a-menu-item>
                 <a-menu-item key="setting:2">
                   我的好友
                 </a-menu-item>
               </a-menu-item-group>
-              <a-menu-item key="setting:4">
+              <a-menu-item key="setting:4" @click="logout">
                 登出
               </a-menu-item>
             </a-sub-menu>
@@ -54,7 +54,7 @@
       </a-col>
     </a-row>
     <a-modal :title="title" :visible="visible" :confirm-loading="confirmLoading" @cancel="handleCancel" :footer="null">
-      <login :callback="handleCancel" v-if="title == '登录'"/>
+      <login :callback="loginSuccess" v-if="title == '登录'"/>
       <sign :callback="handleCancel" v-if="title == '注册'"/>
     </a-modal>
   </div>
@@ -82,7 +82,17 @@ export default {
       this.visible = true;
     },
     handleCancel(){
-      this.visible=false;
+      this.visible = false;
+    },
+    loginSuccess(){
+      this.usrName = "yanghui";
+      this.visible = false;
+    },
+    logout(){
+      this.usrName = null;
+    },
+    jumpUserInfo(){
+      window.location.hash = "/user";
     }
 
   }
