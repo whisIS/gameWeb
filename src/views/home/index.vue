@@ -86,8 +86,6 @@
         </a-row>
       </div>
     </div>
-    
-
     <my-footer></my-footer>
   </div>
 </template>
@@ -97,8 +95,11 @@ import { getDemo, postDemo } from "@/api/home/index.js";
 import { logout } from "@/api/user/logout.js";
 import myFooter from "../../components/myFooter.vue";
 import MyHeader from "../../components/myHeader.vue";
+import game2048 from "../../views/game/2048/index.vue";
+import gameTetris from "../../views/game/tetris/tetris.vue";
+
 export default {
-  components: { myFooter, MyHeader },
+  components: { myFooter, MyHeader, game2048, gameTetris },
   name: "home",
   data() {
     return {
