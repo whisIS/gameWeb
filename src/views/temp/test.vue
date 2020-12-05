@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <div style="text-align:center">
-      <p>{{title}}</p>
+    <div style="text-align: center">
+      <p>{{ title }}</p>
     </div>
     <login />
   </div>
@@ -13,17 +13,15 @@ export default {
   name: "home",
   data() {
     return {
-      title: "登录页面"
+      title: "登录页面",
     };
   },
   created() {
     this.startApi();
   },
   methods: {
-    startApi() {
-      
-    }
-  }
+    startApi() {},
+  },
 };
 </script>
 
