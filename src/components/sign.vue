@@ -107,9 +107,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // let k = signup(this.ruleForm);
-          // console.log(k);
-          this.callback();
+          signup(this.ruleForm).then((res)=>{
+            if(res && res.result){
+              this.callback();
+            }else{
+              console.log(res);
+            }
+          }).catch((err)=>{
+            console.log(err);
+          });
         } else {
           console.log("error submit!!");
           return false;

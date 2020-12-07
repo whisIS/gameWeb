@@ -63,7 +63,7 @@
       :footer="null"
     >
       <login :callback="loginSuccess" v-if="title == '登录'" />
-      <sign :callback="handleCancel" v-if="title == '注册'" />
+      <sign :callback="signSuccess" v-if="title == '注册'" />
     </a-modal>
   </div>
 </template>
@@ -93,6 +93,9 @@ export default {
       this.visible = false;
     },
     loginSuccess() {
+      this.visible = false;
+    },
+    signSuccess() {
       this.visible = false;
     },
     logout() {

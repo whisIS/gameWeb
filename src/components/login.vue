@@ -1,10 +1,10 @@
 <template>
   <a-form-model :model="ruleForm" ref="ruleForm" :rules="rules" v-bind="layout">
-    <a-form-model-item label="用户名" prop="name">
-      <a-input v-model="ruleForm.name" />
+    <a-form-model-item label="用户名" prop="username">
+      <a-input v-model="ruleForm.username" />
     </a-form-model-item>
     <a-form-model-item label="密码" prop="pass">
-      <a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+      <a-input v-model="ruleForm.pwd" type="pwd" autocomplete="off" />
     </a-form-model-item>
 
     <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
@@ -16,6 +16,7 @@
   </a-form-model>
 </template>
 <script>
+import { login,signup} from '../api/user';
 export default {
   props: {
     callback: Function,
@@ -27,12 +28,12 @@ export default {
         wrapperCol: { span: 14 },
       },
       ruleForm: {
-        name: "",
-        pass: "",
+        username: "",
+        pwd: "",
       },
       rules: {
-        name: [{ required: true, message: "请输入登录名" }],
-        pass: [{ required: true, message: "请输入密码" }],
+        username: [{ required: true, message: "请输入登录名" }],
+        pwd: [{ required: true, message: "请输入密码" }],
       },
     };
   },
@@ -40,8 +41,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log("submit!");
-          this.callback();
+          login(this.ruleForm).then((res)=>{
+            if(res && res.result){
+              this.callback();
+            }else{
+              console.log(res);
+            }
+          }).catch((err)=>{
+            console.log(err);
+          });
         } else {
           console.log("error submit!!");
           return false;
