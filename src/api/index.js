@@ -2,7 +2,7 @@ import request from "@/utils/request";
 
 //get
 export const getDemo = params => {
-    return request({ url: "/data/user/logout", method: "get", params });
+    return request({ url: "/getDemo", method: "get", params });
 };
 
 //post

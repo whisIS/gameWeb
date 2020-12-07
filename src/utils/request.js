@@ -1,7 +1,5 @@
 import axios from "axios";
 import { Message } from "element-ui";
-import store from "../store/index";
-import router from "../router/index";
 
 const service = axios.create({
   baseURL: '/api',

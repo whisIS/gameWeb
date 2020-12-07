@@ -8,9 +8,7 @@
     </a-form-model-item>
 
     <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" @click="submitForm('ruleForm')">
-        登录
-      </a-button>
+      <a-button type="primary" @click="submitForm('ruleForm')"> 登录 </a-button>
       <a-button style="margin-left: 30px" @click="resetForm('ruleForm')">
         重置
       </a-button>
@@ -20,7 +18,7 @@
 <script>
 export default {
   props: {
-    callback: Function
+    callback: Function,
   },
   data() {
     return {
@@ -29,23 +27,23 @@ export default {
         wrapperCol: { span: 14 },
       },
       ruleForm: {
-        name: '',
-        pass: '',
+        name: "",
+        pass: "",
       },
       rules: {
-        name: [{ required: true, message: '请输入登录名' }],
-        pass: [{ required: true, message: '请输入密码' }],
+        name: [{ required: true, message: "请输入登录名" }],
+        pass: [{ required: true, message: "请输入密码" }],
       },
     };
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('submit!');
+          console.log("submit!");
           this.callback();
         } else {
-          console.log('error submit!!');
+          console.log("error submit!!");
           return false;
         }
       });
@@ -53,6 +51,6 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-  }
+  },
 };
 </script>

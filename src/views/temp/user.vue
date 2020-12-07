@@ -6,30 +6,24 @@
       <a-col :span="4"></a-col>
       <a-col :span="5">
         <template>
-          <div style="background: rgb(245, 243, 243); padding:20px">
+          <div style="background: rgb(245, 243, 243); padding: 20px">
             <a-card title="个人信息" :bordered="false" style="width: auto">
               <a-row>
-                <a-col :span="8" class="infoLabel">
-                  用户名：
-                </a-col>
+                <a-col :span="8" class="infoLabel"> 用户名： </a-col>
                 <a-col :span="16" class="infoContent">
                   {{ usrInfo.usrName }}
                 </a-col>
               </a-row>
               <br />
               <a-row>
-                <a-col :span="8" class="infoLabel">
-                  E-mail：
-                </a-col>
+                <a-col :span="8" class="infoLabel"> E-mail： </a-col>
                 <a-col :span="16" class="infoContent">
                   {{ usrInfo.email }}
                 </a-col>
               </a-row>
               <br />
               <a-row>
-                <a-col :span="8" class="infoLabel">
-                  电话：
-                </a-col>
+                <a-col :span="8" class="infoLabel"> 电话： </a-col>
                 <a-col :span="16" class="infoContent">
                   {{ usrInfo.phone }}
                 </a-col>
@@ -58,11 +52,9 @@
               </a-col>
               <a-col :span="6">
                 <div class="score">
-                  {{gameInfo.gameScore}}
+                  {{ gameInfo.gameScore }}
                 </div>
-                <div style="color: #99a2aa;font-size:15px">
-                  历史记录
-                </div>
+                <div style="color: #99a2aa; font-size: 15px">历史记录</div>
               </a-col>
             </a-row>
             <br :key="gameInfo.id" />
@@ -77,8 +69,8 @@
 </template>
 
 <script>
-import { getDemo, postDemo } from "@/api/home/index.js";
-import { logout } from "@/api/user/logout.js";
+import { getDemo, postDemo } from "@/api/index.js";
+import { logout } from "@/api/user";
 import myFooter from "../../components/myFooter.vue";
 import MyHeader from "../../components/myHeader.vue";
 export default {
@@ -170,10 +162,10 @@ export default {
   width: auto;
   border-radius: 5px;
 }
-.score{
-    color: #00a1d6;
-    font-weight: 700;
-    font-size: 20px;
-    margin-bottom: 12px;
+.score {
+  color: #00a1d6;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 12px;
 }
 </style>

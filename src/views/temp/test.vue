@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { getDemo, postDemo } from "@/api/home/index.js";
 export default {
   name: "home",
   data() {

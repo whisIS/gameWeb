@@ -1,5 +1,5 @@
 <template>
-  <div  class="home">
+  <div class="home">
     <div>
       <my-header></my-header>
       <div>
@@ -91,8 +91,7 @@
 </template>
 
 <script>
-import { getDemo, postDemo } from "@/api/home/index.js";
-import { logout } from "@/api/user/logout.js";
+import { getDemo, postDemo } from "@/api/index.js";
 import myFooter from "../../components/myFooter.vue";
 import MyHeader from "../../components/myHeader.vue";
 import game2048 from "../../views/game/2048/index.vue";
