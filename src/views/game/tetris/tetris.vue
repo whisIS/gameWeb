@@ -292,6 +292,10 @@ export default {
         if (b == 0) return;
         if (this.isOver()) {
           this.flagOver = true;
+          console.log(this.score)
+          /* TODO:
+            调用接口保存分数
+          */
         }
         this.fix();
         this.px = 3;
