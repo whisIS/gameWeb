@@ -92,6 +92,9 @@ li {
         <h3 style="color:red;padding: 5px;" v-if="flagStop">
           暂停中
         </h3>
+        <h3 style="padding: 5px;" v-if="flagOver">
+          点击开始游戏
+        </h3>   
       </a-col>
     </a-row>
   </div>
@@ -158,11 +161,19 @@ export default {
       timeId1: "",
       timeId2: "",
       flagStop: false,
-      flagOver: false,
+      flagOver: true,
       speed: 600,
     };
   },
   mounted: function() {
+    document.body.onkeydown = function(event) {
+      var e = window.event || event;
+      if (e.preventDefault) {
+        e.preventDefault();
+      } else {
+        window.event.returnValue = false;
+      }
+    };
     this.init();
   },
   methods: {
@@ -336,6 +347,7 @@ export default {
     bindEvents: function(x) {
       var that = this;
       document.onkeydown = function(e) {
+        if(that.flagOver) return;
         var e = e || window.event,
           code = e.code;
         switch (code) {
@@ -368,6 +380,7 @@ export default {
       this.show();
       this.bindEvents(this);
       clearInterval(this.timeId1);
+      clearInterval(this.timeId2);
       this.timeId1 = setInterval(function() {
         that.move(0, 1);
       }, this.speed);
