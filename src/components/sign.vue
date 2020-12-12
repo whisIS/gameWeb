@@ -107,15 +107,24 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          signup(this.ruleForm).then((res)=>{
-            if(res && res.result){
-              this.callback();
-            }else{
-              console.log(res);
-            }
-          }).catch((err)=>{
-            console.log(err);
-          });
+          signup(this.ruleForm)
+            .then((res) => {
+              if (res && res.result) {
+                this.$notification.open({
+                  message: "注册成功！",
+                  icon: <a-icon type="smile" style="color: #108ee9" />,
+                });
+                this.callback();
+              } else {
+                this.$notification.open({
+                  message: res.message,
+                  icon: <a-icon type="frown" style="color: #108ee9" />,
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           console.log("error submit!!");
           return false;

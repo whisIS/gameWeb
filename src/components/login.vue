@@ -16,7 +16,7 @@
   </a-form-model>
 </template>
 <script>
-import { login,signup} from '../api/user';
+import { login, signup } from "../api/user";
 export default {
   props: {
     callback: Function,
@@ -41,15 +41,24 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          login(this.ruleForm).then((res)=>{
-            if(res && res.result){
-              this.callback();
-            }else{
-              console.log(res);
-            }
-          }).catch((err)=>{
-            console.log(err);
-          });
+          login(this.ruleForm)
+            .then((res) => {
+              if (res && res.result) {
+                this.$notification.open({
+                  message: "登录成功！",
+                  icon: <a-icon type="smile" style="color: #108ee9" />,
+                });
+                this.callback();
+              } else {
+                this.$notification.open({
+                  message: res.message,
+                  icon: <a-icon type="frown" style="color: #108ee9" />,
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           console.log("error submit!!");
           return false;
