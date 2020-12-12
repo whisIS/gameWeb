@@ -3,10 +3,11 @@
     <div>
       <my-header></my-header>
       <a-row>
-        <a-col :span="5"></a-col>
-        <a-col :span="12">
+        <a-col :span="3"></a-col>
+        <a-col :span="14">
           <game-2048 v-if="gameId==1"></game-2048>
           <tetris v-if="gameId==2"></tetris>
+          <block-breaker v-if="gameId==3"></block-breaker>
         </a-col>
         <a-col :span="3">
           <div style="height: 100px"></div>
@@ -36,7 +37,6 @@
               </a-form-item>
               <span>
                 <a-rate v-model="grade" allow-half />
-                <span class="ant-rate-text">评分</span>
               </span>
               <a-form-item>
                 <a-button
@@ -82,13 +82,15 @@ import myHeader from "../../components/myHeader.vue";
 import game2048 from "../game/2048/index.vue";
 import Tetris from '../game/tetris/tetris.vue';
 import tetris from "../game/tetris/tetris.vue";
+import blockBreaker from "../game/blockBreaker/index.vue";
 
 export default {
-  components: { myHeader, MyFooter, game2048, Tetris },
+  components: { myHeader, MyFooter, game2048, Tetris, blockBreaker },
   name: "home",
   data() {
     return {
       gameId: this.$route.params["gameId"],
+      gameName: "2048",
       grade: 5,
       comment: "",
       rank: [
