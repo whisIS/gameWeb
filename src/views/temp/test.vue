@@ -3,12 +3,14 @@
     <div style="text-align: center">
       <p>{{ title }}</p>
     </div>
+    <game1></game1>
     <login />
   </div>
 </template>
 
 <script>
 export default {
+  components: { game1 },
   name: "home",
   data() {
     return {
@@ -19,7 +21,13 @@ export default {
     this.startApi();
   },
   methods: {
-    startApi() {},
+    startApi() {
+      this.$notification.open({
+        message: "这是一条通知!",
+        description: "这是描述内容！.",
+        icon: <a-icon type="smile" style="color: #108ee9" />,
+      });
+    },
   },
 };
 </script>
