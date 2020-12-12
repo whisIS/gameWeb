@@ -11,21 +11,21 @@
               <a-row>
                 <a-col :span="8" class="infoLabel"> 用户名： </a-col>
                 <a-col :span="16" class="infoContent">
-                  {{ usrInfo.usrName }}
+                  {{ userInfo.userName }}
                 </a-col>
               </a-row>
               <br />
               <a-row>
                 <a-col :span="8" class="infoLabel"> E-mail： </a-col>
                 <a-col :span="16" class="infoContent">
-                  {{ usrInfo.email }}
+                  {{ userInfo.email }}
                 </a-col>
               </a-row>
               <br />
               <a-row>
                 <a-col :span="8" class="infoLabel"> 电话： </a-col>
                 <a-col :span="16" class="infoContent">
-                  {{ usrInfo.phone }}
+                  {{ userInfo.phone }}
                 </a-col>
               </a-row>
             </a-card>
@@ -34,7 +34,7 @@
       </a-col>
       <a-col :span="11">
         <a-card title="我的分数" style="text-align: left">
-          <template v-for="(gameInfo, index) in usrInfo.gameInfos">
+          <template v-for="(gameInfo, index) in userInfo.gameInfos">
             <a-row
               :key="gameInfo.id"
               class="recordRow"
@@ -69,8 +69,7 @@
 </template>
 
 <script>
-import { getDemo, postDemo } from "@/api/index.js";
-import { logout } from "@/api/user";
+import { logout, getUserInfo } from "@/api/user";
 import myFooter from "../../components/myFooter.vue";
 import MyHeader from "../../components/myHeader.vue";
 export default {
@@ -79,8 +78,8 @@ export default {
   data() {
     return {
       title: "web项目模板",
-      usrInfo: {
-        usrName: "yanghui",
+      userInfo: {
+        userName: "yanghui",
         email: "test@fudan.edu.cn",
         phone: "11223344556",
         gameInfos: [
@@ -113,16 +112,17 @@ export default {
     };
   },
   created() {
-    // this.startApi();
+    this.getUser();
   },
   methods: {
-    startApi() {
-      let params = {
-        name: "lyk",
-      };
-      getDemo(params)
+    getUser() {
+      getUserInfo()
         .then((res) => {
-          console.log(res);
+          if (res && res.result) {
+            this.userInfo.userName = res.userName;
+            this.userInfo.email = res.email;
+            this.userInfo.phone = res.phone;
+          }
         })
         .catch((err) => {
           console.log(err);

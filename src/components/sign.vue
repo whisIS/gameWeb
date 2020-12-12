@@ -114,7 +114,7 @@ export default {
                   message: "注册成功！",
                   icon: <a-icon type="smile" style="color: #108ee9" />,
                 });
-                this.callback();
+                this.callback(this.ruleForm.username);
               } else {
                 this.$notification.open({
                   message: res.message,
