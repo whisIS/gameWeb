@@ -37,23 +37,23 @@
           <a-card title="我的分数" style="text-align: left">
             <template v-for="(gameInfo, index) in userInfo.gameInfos">
               <a-row
-                :key="gameInfo.id"
+                :key="index"
                 class="recordRow"
                 type="flex"
                 justify="space-around"
                 align="middle"
               >
                 <a-col :span="6">
-                  <img :src="imgs[index % 2]" class="recordImg" />
+                  <img :src="game[gameInfo.gameId]" class="recordImg" />
                 </a-col>
                 <a-col :span="12">
                   <h2>
-                    {{ gameInfo.gameName }}
+                    {{ name[gameInfo.gameId] }}
                   </h2>
                 </a-col>
                 <a-col :span="6">
                   <div class="score">
-                    {{ gameInfo.gameScore }}
+                    {{ gameInfo.score }}
                   </div>
                   <div style="color: #99a2aa; font-size: 15px">历史记录</div>
                 </a-col>
@@ -77,40 +77,19 @@ export default {
   components: { myFooter, MyHeader },
   name: "home",
   data() {
+    let game1 = require("../../assets/game1.jpg");
+    let game2 = require("../../assets/game2.jpg");
+    let game3 = require("../../assets/game3.jpg");
+    let game4 = require("../../assets/game4.jpg");
     return {
-      title: "web项目模板",
-      gameInfos: [
-        {
-          gameId: 1,
-          gameName: "Tetris",
-          gameScore: 12580,
-        },
-        {
-          gameId: 2,
-          gameName: "黑白棋",
-          gameScore: 758,
-        },
-        {
-          gameId: 3,
-          gameName: "Tetris",
-          gameScore: 33455,
-        },
-        {
-          gameId: 4,
-          gameName: "黑白棋",
-          gameScore: 457,
-        },
-      ],
+      game: [game1,game2,game3,game4],
+      name: [ "2048", "俄罗斯方块", "打砖块", "推箱子" ],
       userInfo: {
         userName: "",
         email: "",
         phone: "",
         gameInfos: [],
       },
-      imgs: [
-        "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1695800282,2904318074&fm=26&gp=0.jpg",
-        "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1304658638,3448281260&fm=26&gp=0.jpg",
-      ],
     };
   },
   created() {
@@ -124,7 +103,7 @@ export default {
             this.userInfo.userName = res.userName;
             this.userInfo.email = res.email;
             this.userInfo.phone = res.phone;
-            console.log(res);
+            this.userInfo.gameInfos = res.ranks;
           } else {
             window.location.href = "/";
           }
