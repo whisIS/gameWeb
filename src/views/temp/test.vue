@@ -1,16 +1,15 @@
 <template>
   <div class="home">
-    <div style="text-align: center">
-      <p>{{ title }}</p>
-    </div>
-    <game1></game1>
-    <login />
+    <box></box>
+    <tips></tips>
   </div>
 </template>
 
 <script>
+import box from "../game/box/index";
+import tips from "../game/box/tip";
 export default {
-  components: { game1 },
+  components: { box, tips },
   name: "home",
   data() {
     return {
@@ -18,7 +17,7 @@ export default {
     };
   },
   created() {
-    this.startApi();
+    sessionStorage.setItem("map","map1");
   },
   methods: {
     startApi() {
@@ -34,8 +33,10 @@ export default {
 
 <style lang='scss' scoped>
 .home {
-  width: 100%;
   height: 100%;
-  line-height: 75px;
+  position: relative;
+  text-align: center;
+  line-height: 30px;
+  padding-bottom: 100px;
 }
 </style>

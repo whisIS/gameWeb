@@ -4,7 +4,7 @@
       <a-col :span="13">
         <a-menu v-model="current" mode="horizontal" style="text-align: right">
           <a-menu-item key="app">
-            <a href="#/home"> <a-icon type="appstore" />9934小游戏 </a>
+            <a href="#/"> <a-icon type="appstore" />9934小游戏 </a>
           </a-menu-item>
           <a-menu-item key="mail">
             <a
@@ -116,11 +116,12 @@ export default {
       this.userName = name;
     },
     logout() {
-      this.username = null;
+      this.userName = null;
       logout();
+      window.location.hash = "#/";
     },
     jumpUserInfo() {
-      window.location.hash = "/user";
+      window.location.hash = "#/user";
     },
   },
 };

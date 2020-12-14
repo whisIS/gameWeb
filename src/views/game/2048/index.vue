@@ -1,9 +1,8 @@
 <template>
   <div class="layout">
     <header>
-      <span class="score">总分：{{ score }}</span>
+      <a-button style="background-color:orange;height:auto" @click="setScore">总分：{{ score }}</a-button>
       <button class="star" @click="init">开始新的游戏</button>
-      <span class="sd"></span>
     </header>
     <div class="all-container">
       <div class="background">
@@ -39,6 +38,9 @@ const pointSort = (property) => (firstRocks, secondRocks) => {
 };
 const dely = (ms) => new Promise((res) => setTimeout(res, ms));
 export default {
+  props:{
+    submitScore: Function
+  },
   data() {
     return {
       msg: "",
@@ -111,6 +113,10 @@ export default {
     });
   },
   methods: {
+    setScore(){
+      let s = this.score;
+      this.submitScore(s);
+    },
     isMobile() {
       return window.navigator.userAgent.match(/Mobile/);
     },
@@ -354,7 +360,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .show {
   position: fixed;
   bottom: 50vh;

@@ -102,6 +102,9 @@ li {
 <script>
 import index from "../../home/index.vue";
 export default {
+  props:{
+    submitScore: Function
+  },
   components: { index },
   data: function() {
     return {
@@ -292,10 +295,9 @@ export default {
         if (b == 0) return;
         if (this.isOver()) {
           this.flagOver = true;
-          console.log(this.score)
-          /* TODO:
-            调用接口保存分数
-          */
+          if(this.score>0){
+            this.submitScore(this.score);
+          }
         }
         this.fix();
         this.px = 3;

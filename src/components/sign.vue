@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { signup } from "../api/user";
+import { signup, login } from "../api/user";
 export default {
   props: {
     callback: Function,
@@ -107,29 +107,44 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          signup(this.ruleForm)
-            .then((res) => {
-              if (res && res.result) {
-                this.$notification.open({
-                  message: "注册成功！",
-                  icon: <a-icon type="smile" style="color: #108ee9" />,
-                });
-                this.callback(this.ruleForm.username);
-              } else {
-                this.$notification.open({
-                  message: res.message,
-                  icon: <a-icon type="frown" style="color: #108ee9" />,
-                });
-              }
-            })
-            .catch((err) => {
-              console.log(err);
+          if (!/^1[0123456789]\d{9}$/.test(this.ruleForm.phone)) {
+            this.$notification.open({
+              message: "手机号码错误",
+              icon: <a-icon type="frown" style="color: #108ee9" />,
             });
+          }else{
+            this.submit();
+          }
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    submit() {
+      signup(this.ruleForm)
+        .then((res) => {
+          if (res && res.result) {
+            this.$notification.open({
+              message: "注册成功！",
+              icon: <a-icon type="smile" style="color: #108ee9" />,
+            });
+            let temp = {
+              username: this.ruleForm.username,
+              pwd: this.ruleForm.pwd,
+            };
+            login(temp);
+            this.callback(this.ruleForm.username);
+          } else {
+            this.$notification.open({
+              message: res.message,
+              icon: <a-icon type="frown" style="color: #108ee9" />,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
