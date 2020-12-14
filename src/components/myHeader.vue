@@ -2,7 +2,7 @@
   <div class="myHeader">
     <a-row>
       <a-col :span="13">
-        <a-menu v-model="current" mode="horizontal" style="text-align: right">
+        <a-menu v-model="current" mode="horizontal" style="background: #ccffff;text-align:right">
           <a-menu-item key="app">
             <a href="#/"> <a-icon type="appstore" />9934小游戏 </a>
           </a-menu-item>
@@ -28,7 +28,7 @@
       </a-col>
       <a-col :span="11">
         <div v-if="userName == null">
-          <a-menu v-model="current" mode="horizontal" style="text-align: left">
+          <a-menu v-model="current" mode="horizontal" style="background: #ccffff;text-align: left">
             <a-menu-item key="login" @click="login">
               <a-icon type="login" />登录
             </a-menu-item>
@@ -38,7 +38,7 @@
           </a-menu>
         </div>
         <div v-else>
-          <a-menu v-model="current" mode="horizontal" style="text-align: left">
+          <a-menu v-model="current" mode="horizontal" style="background: #ccffff;text-align: left">
             <a-sub-menu>
               <span slot="title" class="submenu-title-wrapper">
                 <a-icon type="user" />{{ userName }}
@@ -126,3 +126,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+</style>

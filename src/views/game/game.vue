@@ -7,11 +7,8 @@
         <a-col :span="14">
           <game-2048 v-if="gameId == 1" :submitScore="saveScore"></game-2048>
           <tetris v-if="gameId == 2" :submitScore="saveScore"></tetris>
-          <block-breaker
-            v-if="gameId == 3"
-            :submitScore="saveScore"
-          ></block-breaker>
-          <box v-if="gameId == 4"></box>
+          <block-breaker v-if="gameId == 3" :submitScore="saveScore"></block-breaker>
+          <box v-if="gameId == 4" :submitScore="saveScore"></box>
         </a-col>
         <a-col :span="3">
           <div style="height: 100px"></div>
@@ -230,7 +227,7 @@ export default {
   position: relative;
   text-align: center;
   line-height: 30px;
-  padding-bottom: 100px;
+  margin-bottom: 100px;
 }
 .username {
   color: #021d25;

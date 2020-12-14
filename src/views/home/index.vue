@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div>
+    <div class="bg1">
       <my-header></my-header>
       <div>
         <br />
@@ -94,12 +94,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bg1{
+  background :url("../../assets/home.png");
+}
 .home {
   width: 100%;
   position: relative;
   text-align: center;
   line-height: 30px;
-  padding-bottom: 100px;
+  margin-bottom: 100px;
 }
 .gameCard {
   height: auto;

@@ -124,6 +124,7 @@ export default {
             this.userInfo.userName = res.userName;
             this.userInfo.email = res.email;
             this.userInfo.phone = res.phone;
+            console.log(res);
           } else {
             window.location.href = "/";
           }
@@ -142,7 +143,7 @@ export default {
   position: relative;
   text-align: center;
   line-height: 30px;
-  padding-bottom: 100px;
+  margin-bottom: 100px;
 }
 .gameCard {
   height: auto;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div>
       <span>上:W</span>
       <span>下:S</span>
       <span>左:A</span>

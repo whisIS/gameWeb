@@ -1,8 +1,8 @@
 <template>
   <div id="bpp">
-    <div class="bpp">
+    <div class="bpp" style="zoom:1.5">
       <h2>{{title}}</h2>
-      <ul :style="{ width: width, height: height }">
+      <ul :style="{ width: width, height: height}">
         <li v-for="(li, index) in box" :class="li.class" :key="index"></li>
       </ul>
     </div>
@@ -11,6 +11,9 @@
 <script>
 import map from "./map.json";
 export default {
+  props: {
+    submitScore: Function
+  },
   name: "bpp",
   data() {
     let str = sessionStorage.getItem("map") || "map1";
@@ -99,10 +102,14 @@ export default {
             let str = sessionStorage.getItem("map") || "map1";
             if(str == "map1"){
               sessionStorage.setItem("map","map2");
+              this.submitScore(100);
               this.changeMap(2)
             }else if(str == "map2"){
               sessionStorage.setItem("map","map3");
+              this.submitScore(200);
               this.changeMap(3)
+            }else{
+              this.submitScore(300);
             }
           }
         } else {
