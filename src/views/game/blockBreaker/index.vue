@@ -9,6 +9,9 @@ import { getDemo, postDemo } from "@/api/index.js";
 import { Game } from "./js/game.js";
 import { _main, a } from "./js/main.js";
 export default {
+  props: {
+    submitScore: Function
+  },
   name: "home",
   data() {
     return {
@@ -36,6 +39,7 @@ export default {
     };
     _main.start(document.getElementById("canvas"), this.images);
     clearInterval(this.timeId);
+    var that = this;
     this.timeId = setInterval(function() {
       this.score = _main.score.allScore;
       if (!this.flagOver) {
@@ -44,6 +48,9 @@ export default {
           /* TODO:
             调用接口保存分数
           */
+          if(this.score>0){
+            that.submitScore(this.score);
+          }
         }
       }else{
         if(_main.game.state == 1 || _main.game.state == 2){

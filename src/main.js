@@ -26,12 +26,15 @@ import "./components";
 import * as filters from "./filters";
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
-import { message,notification } from 'ant-design-vue'
+import { message, notification } from 'ant-design-vue'
+message.config({
+  duration: 2,
+});
+notification.config({
+  duration: 3,
+});
 Vue.prototype.$message = message;
 Vue.prototype.$notification = notification;
-message.config({
-    duration: 2,
-});
 
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]));
 

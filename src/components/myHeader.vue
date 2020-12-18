@@ -2,9 +2,9 @@
   <div class="myHeader">
     <a-row>
       <a-col :span="13">
-        <a-menu v-model="current" mode="horizontal" style="text-align: right">
+        <a-menu v-model="current" mode="horizontal" style="background: #ccffff;text-align:right">
           <a-menu-item key="app">
-            <a href="#/home"> <a-icon type="appstore" />9934小游戏 </a>
+            <a href="#/"> <a-icon type="appstore" />9934小游戏 </a>
           </a-menu-item>
           <a-menu-item key="mail">
             <a
@@ -27,8 +27,8 @@
         </a-menu>
       </a-col>
       <a-col :span="11">
-        <div v-if="usrName == null">
-          <a-menu v-model="current" mode="horizontal" style="text-align: left">
+        <div v-if="userName == null">
+          <a-menu v-model="current" mode="horizontal" style="background: #ccffff;text-align: left">
             <a-menu-item key="login" @click="login">
               <a-icon type="login" />登录
             </a-menu-item>
@@ -38,10 +38,10 @@
           </a-menu>
         </div>
         <div v-else>
-          <a-menu v-model="current" mode="horizontal" style="text-align: left">
+          <a-menu v-model="current" mode="horizontal" style="background: #ccffff;text-align: left">
             <a-sub-menu>
               <span slot="title" class="submenu-title-wrapper">
-                <a-icon type="user" />{{ usrName }}
+                <a-icon type="user" />{{ userName }}
               </span>
               <a-menu-item-group title="用户">
                 <a-menu-item key="setting:1" @click="jumpUserInfo">
@@ -69,18 +69,33 @@
 </template>
 
 <script>
+import { getUserInfo, logout } from "../api/user";
 export default {
   name: "myHeader",
   data() {
     return {
-      current: ["mail"],
-      usrName: null,
+      current: [],
+      userName: null,
       title: "登录",
       visible: false,
       confirmLoading: false,
     };
   },
+  created() {
+    this.check();
+  },
   methods: {
+    check() {
+      getUserInfo()
+        .then((res) => {
+          if (res && res.result && res.userName) {
+            this.userName = res.userName;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     login() {
       this.title = "登录";
       this.visible = true;
@@ -92,18 +107,26 @@ export default {
     handleCancel() {
       this.visible = false;
     },
-    loginSuccess() {
+    loginSuccess(name) {
       this.visible = false;
+      this.userName = name;
     },
-    signSuccess() {
+    signSuccess(name) {
       this.visible = false;
+      this.userName = name;
     },
     logout() {
-      this.usrName = null;
+      this.userName = null;
+      logout();
+      window.location.hash = "#/";
     },
     jumpUserInfo() {
-      window.location.hash = "/user";
+      window.location.hash = "#/user";
     },
   },
 };
 </script>
+
+<style scoped>
+
+</style>

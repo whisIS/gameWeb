@@ -5,13 +5,14 @@
       <a-row>
         <a-col :span="3"></a-col>
         <a-col :span="14">
-          <game-2048 v-if="gameId==1"></game-2048>
-          <tetris v-if="gameId==2"></tetris>
-          <block-breaker v-if="gameId==3"></block-breaker>
+          <game-2048 v-if="gameId == 1" :submitScore="saveScore"></game-2048>
+          <tetris v-if="gameId == 2" :submitScore="saveScore"></tetris>
+          <block-breaker v-if="gameId == 3" :submitScore="saveScore"></block-breaker>
+          <box v-if="gameId == 4" :submitScore="saveScore"></box>
         </a-col>
         <a-col :span="3">
           <div style="height: 100px"></div>
-          <a-card title="2048 高分榜">
+          <a-card :title="rankTitle">
             <div v-for="(item, index) in rank" :key="index">
               <a-row>
                 <a-col :span="8" class="username">
@@ -33,7 +34,7 @@
           <a-comment>
             <div slot="content">
               <a-form-item>
-                <a-textarea :rows="4" :value="comment" />
+                <a-textarea :rows="4" v-model="comment" />
               </a-form-item>
               <span>
                 <a-rate v-model="grade" allow-half />
@@ -59,7 +60,7 @@
               <a slot="author">{{ item.username }}</a>
               <a-avatar
                 slot="avatar"
-                style="backgroundColor:#2d7e99"
+                style="backgroundcolor: #2d7e99"
                 icon="user"
               />
               <p slot="content">
@@ -72,92 +73,149 @@
         </a-row>
       </div>
     </div>
+    <a-modal
+      v-model="visible"
+      title="上传得分"
+      @ok="handleOk"
+      cancelText="取消"
+      okText="确认"
+    >
+      <p>确定要上传分数吗？当前分数:{{ score }}</p>
+    </a-modal>
     <my-footer></my-footer>
   </div>
 </template>
 
 <script>
-import MyFooter from "../../components/myFooter.vue";
-import myHeader from "../../components/myHeader.vue";
-import game2048 from "../game/2048/index.vue";
-import Tetris from '../game/tetris/tetris.vue';
-import tetris from "../game/tetris/tetris.vue";
-import blockBreaker from "../game/blockBreaker/index.vue";
+import MyFooter from "../../components/myFooter";
+import myHeader from "../../components/myHeader";
+import game2048 from "../game/2048/index";
+import tetris from "../game/tetris/tetris";
+import box from "../game/box/index";
+import blockBreaker from "../game/blockBreaker/index";
+import {
+  gameRank,
+  gameComment,
+  writeComment,
+  gameInfo,
+  gameScore,
+} from "../../api/game";
+import { getUserInfo } from "../../api/user";
 
 export default {
-  components: { myHeader, MyFooter, game2048, Tetris, blockBreaker },
+  components: { myHeader, MyFooter, game2048, tetris, blockBreaker, box },
   name: "home",
   data() {
     return {
       gameId: this.$route.params["gameId"],
-      gameName: "2048",
+      gameName: "",
       grade: 5,
       comment: "",
-      rank: [
-        {
-          rank: 1,
-          username: "user1",
-          score: 5000,
-        },
-        {
-          rank: 2,
-          username: "user2",
-          score: 4000,
-        },
-        {
-          rank: 3,
-          username: "user3",
-          score: 3000,
-        },
-        {
-          rank: 4,
-          username: "user4",
-          score: 2000,
-        },
-        {
-          rank: 5,
-          username: "user5",
-          score: 1000,
-        },
-      ],
-      comments: [
-        {
-          username: "user1",
-          comment: "太简单了！！！",
-          grade: 3.5,
-          date: "2020-12-12 06:21:21",
-        },
-        {
-          username: "user2",
-          comment: "还不错，继续加油！",
-          grade: 4,
-          date: "2020-12-12 06:22:21",
-        },
-        {
-          username: "user3",
-          comment: "经典2048。",
-          grade: 4,
-          date: "2020-12-12 06:23:21",
-        },
-        {
-          username: "user4",
-          comment: "什么sb游戏？？？",
-          grade: 1.5,
-          date: "2020-12-12 06:24:21",
-        },
-      ],
+      rank: "",
+      rankTitle: "",
+      comments: "",
+      visible: false,
+      score: 0,
     };
   },
   created() {
-    this.startApi();
+    this.getGameInfo();
+    this.getGameComments();
+    this.getGameRank();
   },
+  mounted() {},
   methods: {
-    startApi() {},
-
+    getGameInfo() {
+      let temp = parseInt(this.gameId);
+      gameInfo({ gameId: temp })
+        .then((res) => {
+          if (res && res.result) {
+            this.gameName = res.gamename;
+            this.grade = res.mark;
+            this.rankTitle = res.gamename + "排行榜";
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     submitComment() {
-      console.log(this.grade);
-      console.log(this.comment);
-      console.log(this.$route.params["gameId"]);
+      let temp = {
+        gameId: parseInt(this.gameId),
+        comment: this.comment,
+        grade: this.grade,
+      };
+      writeComment(temp)
+        .then((res) => {
+          if (res && res.result) {
+            this.$notification.open({
+              message: "发表成功！",
+              icon: <a-icon type="smile" style="color: #108ee9" />,
+            });
+            this.getGameComments();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getGameComments() {
+      let temp = {
+        gameId: parseInt(this.gameId),
+      };
+      gameComment(temp)
+        .then((res) => {
+          if (res && res.comments) {
+            this.comments = res.comments;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getGameRank() {
+      let temp = {
+        gameId: parseInt(this.gameId),
+      };
+      gameRank(temp)
+        .then((res) => {
+          if (res && res.ranks) {
+            this.rank = res.ranks;
+            // this.$forceUpdate();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    saveScore(s) {
+      this.score = s;
+      this.visible = true;
+    },
+    handleOk() {
+      this.submitScore(this.score);
+      this.visible = false;
+    },
+    submitScore(ss) {
+      getUserInfo()
+        .then((res) => {
+          if (res && res.result) {
+            let temp = {
+              gameId: parseInt(this.gameId),
+              score: parseInt(ss),
+            };
+            gameScore(temp)
+              .then((res) => {
+                this.getGameRank();
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
@@ -169,7 +227,7 @@ export default {
   position: relative;
   text-align: center;
   line-height: 30px;
-  padding-bottom: 100px;
+  margin-bottom: 100px;
 }
 .username {
   color: #021d25;

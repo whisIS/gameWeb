@@ -3,8 +3,8 @@
     <a-form-model-item label="用户名" prop="username">
       <a-input v-model="ruleForm.username" />
     </a-form-model-item>
-    <a-form-model-item label="密码" prop="pass">
-      <a-input v-model="ruleForm.pwd" type="pwd" autocomplete="off" />
+    <a-form-model-item label="密码" prop="pwd">
+      <a-input v-model="ruleForm.pwd" type="password" autocomplete="off" />
     </a-form-model-item>
 
     <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
@@ -48,7 +48,7 @@ export default {
                   message: "登录成功！",
                   icon: <a-icon type="smile" style="color: #108ee9" />,
                 });
-                this.callback();
+                this.callback(res.username);
               } else {
                 this.$notification.open({
                   message: res.message,
